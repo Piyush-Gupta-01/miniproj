@@ -65,6 +65,16 @@ export interface QuizQuestion {
   explanation?: string
 }
 
+// ✨ ADDED: A specific type for quiz results
+export interface QuizResult {
+  score: number;
+  correctAnswers: number;
+  totalQuestions: number;
+  completedAt: Date;
+  // Example: { "questionId-1": 2, "questionId-2": 0 }
+  answers: Record<string, number>; 
+}
+
 export interface Badge {
   id: string
   name: string
@@ -112,9 +122,11 @@ interface AppStore {
   
   // Quiz State
   currentQuiz: Quiz | null
-  quizResults: Record<string, any> // quizId -> results
+  // ✨ CHANGED: Replaced 'any' with the specific 'QuizResult' type
+  quizResults: Record<string, QuizResult>
   setCurrentQuiz: (quiz: Quiz | null) => void
-  saveQuizResult: (quizId: string, result: any) => void
+  // ✨ CHANGED: Replaced 'any' with the specific 'QuizResult' type
+  saveQuizResult: (quizId: string, result: QuizResult) => void
   
   // Leaderboard State
   leaderboard: Record<string, LeaderboardEntry[]> // courseId -> leaderboard
